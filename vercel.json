@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".svelte-kit/output",
+  "framework": "sveltekit",
+  "installCommand": "npm ci",
+  "regions": ["iad1"],
+  "headers": [
+    {
+      "source": "/api/pokemon",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}

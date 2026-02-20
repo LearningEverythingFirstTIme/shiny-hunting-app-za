@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-poke-red: #FF0000;
+  --color-poke-blue: #3B4CCA;
+  --color-poke-yellow: #FFDE00;
+  --color-poke-gold: #B3A125;
+  --color-shiny-gold: #FFD700;
+  --color-shiny-silver: #C0C0C0;
+}
