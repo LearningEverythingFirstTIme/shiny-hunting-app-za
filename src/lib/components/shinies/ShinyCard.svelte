@@ -20,9 +20,9 @@
   <div class="h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
   
   <div class="relative bg-gradient-to-b from-[#FFFACD]/60 to-[#FFE4B5]/30 p-4">
-    <!-- Delete button -->
+    <!-- Delete button - always visible on mobile, hover on desktop -->
     <button 
-      class="absolute top-3 right-3 btn btn-ghost btn-circle btn-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-red-100"
+      class="absolute top-3 right-3 btn btn-ghost btn-circle btn-sm opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all hover:bg-red-100"
       on:click={handleDelete}
       title="Delete"
     >
