@@ -69,7 +69,11 @@
   }
   
   async function handleRecordShiny(event: CustomEvent) {
-    if (!$user) return;
+    console.log('handleRecordShiny called with:', event.detail);
+    if (!$user) {
+      console.error('No user logged in');
+      return;
+    }
     
     const { error } = await recordShiny(
       $user.uid,
@@ -82,7 +86,11 @@
     );
     
     if (error) {
+      console.error('Failed to record shiny:', error);
       alert('Failed to record shiny: ' + error);
+    } else {
+      console.log('Shiny recorded successfully');
+      selectedPokemon = null;
     }
   }
 </script>

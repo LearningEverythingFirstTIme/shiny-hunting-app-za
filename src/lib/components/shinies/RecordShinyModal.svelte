@@ -22,17 +22,23 @@
   }
   
   function handleSubmit() {
-    if (!pokemon) return;
+    console.log('handleSubmit called, pokemon:', pokemon);
+    if (!pokemon) {
+      console.error('No pokemon selected');
+      return;
+    }
     
-    dispatch('record', {
+    const eventData = {
       pokemonId: pokemon.id,
       pokemonName: pokemon.name,
       shinySpriteUrl: pokemon.shinySpriteUrl,
       method: selectedMethod,
       encounters,
       notes
-    });
+    };
+    console.log('Dispatching record event:', eventData);
     
+    dispatch('record', eventData);
     close();
   }
   
