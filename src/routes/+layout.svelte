@@ -49,7 +49,7 @@
       </div>
       
       <!-- Page content -->
-      <main class="flex-1 p-4 pb-24 lg:pb-4 page-transition">
+      <main class="flex-1 p-4 page-transition">
         <slot />
       </main>
       

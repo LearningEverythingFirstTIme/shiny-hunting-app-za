@@ -1,8 +1,13 @@
 import { browser } from '$app/environment';
 import type { Pokemon } from '$lib/types';
 
-const CACHE_KEY = 'za_pokedex_cache';
+const CACHE_KEY = 'za_pokedex_cache_v2';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+// Clear old cache key if it exists (one-time migration)
+if (browser) {
+  localStorage.removeItem('za_pokedex_cache');
+}
 
 // Z-A Pokemon - Pokemon Legends: Z-A Pokedex (230 Pokemon)
 // Based on the official list from IGN
