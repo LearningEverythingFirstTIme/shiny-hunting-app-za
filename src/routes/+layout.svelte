@@ -36,7 +36,7 @@
   });
 </script>
 
-<div class="min-h-screen bg-base-200">
+<div class="min-h-screen bg-gradient-to-br from-[#FFF8F0] via-[#FFE4E9] to-[#E0F4FC]">
   <div class="flex">
     <!-- Sidebar - hidden on mobile -->
     <Sidebar />
@@ -49,7 +49,7 @@
       </div>
       
       <!-- Page content -->
-      <main class="flex-1 p-4 pb-24 lg:pb-4">
+      <main class="flex-1 p-4 pb-24 lg:pb-4 page-transition">
         <slot />
       </main>
       

@@ -17,11 +17,11 @@
 </script>
 
 <div class="flex flex-wrap gap-2 items-center">
-  <span class="text-sm font-medium">Filter by type:</span>
+  <span class="text-sm font-medium text-[#4A3A4B]">Filter by type:</span>
   
   {#each POKEMON_TYPES as type}
     <button
-      class="px-2 py-1 rounded text-xs font-medium capitalize transition-all {selectedTypes.includes(type) ? TYPE_COLORS[type] + ' text-white' : 'bg-base-200 text-base-content hover:bg-base-300'}"
+      class="px-3 py-1.5 rounded-full text-xs font-semibold capitalize transition-all transform hover:scale-105 {selectedTypes.includes(type) ? TYPE_COLORS[type] + ' text-white shadow-md' : 'bg-[#F5EDE3] text-[#4A3A4B] hover:bg-[#E8DFD5]'}"
       on:click={() => toggleType(type)}
     >
       {type}
@@ -30,7 +30,7 @@
   
   {#if selectedTypes.length > 0}
     <button
-      class="btn btn-ghost btn-xs"
+      class="btn btn-ghost btn-xs text-[#E89AAA] hover:text-[#FFB7C5] hover:bg-[#FFB7C5]/10"
       on:click={clearTypes}
     >
       Clear

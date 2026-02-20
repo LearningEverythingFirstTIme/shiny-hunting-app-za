@@ -16,6 +16,7 @@
   import { startHunt } from '$lib/services/huntService';
   import { recordShiny } from '$lib/services/shinyService';
   import { user } from '$lib/stores/auth';
+  import { Sparkles, BookOpen } from 'lucide-svelte';
   
   let pokemon: Pokemon[] = [];
   let loading = true;
@@ -90,31 +91,39 @@
   <div class="max-w-7xl mx-auto">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-      <div>
-        <h1 class="text-2xl font-bold">Pokedex</h1>
-        <p class="text-gray-500">{filteredPokemon.length} Pokemon in Z-A</p>
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FFB7C5] to-[#87CEEB] flex items-center justify-center shadow-lg">
+          <BookOpen class="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-[#2D1B2E]">Pokedex</h1>
+          <p class="text-[#4A3A4B]">{filteredPokemon.length} Pokemon in Z-A</p>
+        </div>
       </div>
       
-      <div class="flex items-center gap-2">
-        <label class="flex items-center gap-2 cursor-pointer">
+      <div class="flex items-center gap-3 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
+        <span class="text-sm text-[#4A3A4B]">Show Shiny</span>
+        <label class="relative inline-flex items-center cursor-pointer">
           <input 
             type="checkbox" 
-            class="toggle toggle-primary" 
+            class="sr-only peer"
             bind:checked={showShiny}
           />
-          <span class="text-sm">Show Shiny</span>
+          <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-[#FFB7C5] peer-checked:to-[#87CEEB]"></div>
         </label>
       </div>
     </div>
     
     <!-- Filters -->
-    <div class="space-y-4 mb-6">
-      <SearchInput 
-        bind:value={searchQuery}
-        placeholder="Search by name or number..."
-      />
-      
-      <TypeFilter bind:selectedTypes />
+    <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-4 shadow-sm mb-6">
+      <div class="space-y-4">
+        <SearchInput 
+          bind:value={searchQuery}
+          placeholder="Search by name or number..."
+        />
+        
+        <TypeFilter bind:selectedTypes />
+      </div>
     </div>
     
     <!-- Pokemon Grid -->
@@ -123,7 +132,7 @@
         <LoadingSpinner size="lg" />
       </div>
     {:else}
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
         {#each filteredPokemon as p}
           <PokemonCard 
             pokemon={p} 
@@ -137,7 +146,9 @@
       
       {#if filteredPokemon.length === 0}
         <div class="text-center py-12">
-          <p class="text-gray-500">No Pokemon found matching your search</p>
+          <div class="text-6xl mb-4">🔍</div>
+          <p class="text-[#4A3A4B] text-lg">No Pokemon found matching your search</p>
+          <p class="text-[#4A3A4B]/60 text-sm mt-2">Try adjusting your filters</p>
         </div>
       {/if}
     {/if}
@@ -145,23 +156,30 @@
   
   <!-- Action buttons for selected Pokemon -->
   {#if selectedPokemon}
-    <div class="fixed bottom-24 left-4 right-4 lg:bottom-8 lg:left-80 lg:right-8 z-40">
-      <div class="card bg-base-100 shadow-xl">
+    <div class="fixed bottom-24 left-4 right-4 lg:bottom-8 lg:left-80 lg:right-8 z-40 animate-slide-up">
+      <div class="card bg-white/90 backdrop-blur-md shadow-2xl border border-[#FFB7C5]/30 rounded-2xl overflow-hidden">
+        <div class="h-1 bg-gradient-to-r from-[#FFB7C5] via-[#87CEEB] to-[#FFB7C5]"></div>
+        
         <div class="card-body p-4">
           <div class="flex items-center gap-4">
-            <img 
-              src={selectedPokemon.shinySpriteUrl} 
-              alt={selectedPokemon.name}
-              class="w-16 h-16 object-contain"
-            />
+            <div class="relative">
+              <img 
+                src={selectedPokemon.shinySpriteUrl} 
+                alt={selectedPokemon.name}
+                class="w-16 h-16 object-contain animate-float"
+              />
+              <div class="absolute -top-1 -right-1">
+                <Sparkles class="w-5 h-5 text-[#FFD700] animate-sparkle" />
+              </div>
+            </div>
             
             <div class="flex-1">
-              <h3 class="font-bold capitalize">{selectedPokemon.name}</h3>
-              <p class="text-sm text-gray-500">What would you like to do?</p>
+              <h3 class="font-bold text-lg capitalize text-[#2D1B2E]">{selectedPokemon.name}</h3>
+              <p class="text-sm text-[#4A3A4B]">What would you like to do?</p>
             </div>
             
             <button 
-              class="btn btn-ghost btn-sm"
+              class="btn btn-ghost btn-circle btn-sm hover:bg-[#FFB7C5]/20"
               on:click={() => selectedPokemon = null}
             >
               ✕
@@ -170,22 +188,24 @@
           
           <div class="flex gap-2 mt-4">
             <button 
-              class="btn btn-primary flex-1"
+              class="btn flex-1 bg-gradient-to-r from-[#FFB7C5] to-[#E89AAA] text-white border-0 hover:shadow-lg hover:brightness-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               on:click={() => {
                 showStartHuntModal = true;
               }}
               disabled={huntingPokemonIds.includes(selectedPokemon.id)}
             >
-              {huntingPokemonIds.includes(selectedPokemon.id) ? 'Already Hunting' : '🎯 Start Hunt'}
+              <Target class="w-4 h-4 mr-1" />
+              {huntingPokemonIds.includes(selectedPokemon.id) ? 'Already Hunting' : 'Start Hunt'}
             </button>
             
             <button 
-              class="btn btn-success flex-1"
+              class="btn flex-1 bg-gradient-to-r from-[#87CEEB] to-[#5BA8D0] text-white border-0 hover:shadow-lg hover:brightness-105 transition-all"
               on:click={() => {
                 showRecordShinyModal = true;
               }}
             >
-              ✨ Record Shiny
+              <Sparkles class="w-4 h-4 mr-1" />
+              Record Shiny
             </button>
           </div>
         </div>
@@ -208,3 +228,7 @@
     on:record={handleRecordShiny}
   />
 </AuthGuard>
+
+<script context="module">
+  import { Target } from 'lucide-svelte';
+</script>

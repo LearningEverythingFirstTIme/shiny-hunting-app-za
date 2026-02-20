@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { HUNT_METHODS } from '$lib/utils/formatters';
   import type { Pokemon } from '$lib/types';
-  import { X } from 'lucide-svelte';
+  import { X, Sparkles } from 'lucide-svelte';
   
   export let isOpen = false;
   export let pokemon: Pokemon | null = null;
@@ -41,39 +41,46 @@
 
 {#if isOpen && pokemon}
   <div class="modal modal-open">
-    <div class="modal-box relative max-w-md">
+    <div class="modal-box relative max-w-md bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-[#FFD700]/30">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] rounded-t-2xl"></div>
+      
       <button 
-        class="btn btn-sm btn-circle absolute right-2 top-2"
+        class="btn btn-sm btn-circle absolute right-3 top-3 bg-[#FFFACD] hover:bg-[#FFE4B5] border-0"
         on:click={close}
       >
-        <X class="w-4 h-4" />
+        <X class="w-4 h-4 text-[#4A3A4B]" />
       </button>
       
-      <h3 class="font-bold text-lg mb-4">Record Shiny</h3>
+      <h3 class="font-bold text-xl mb-4 text-[#2D1B2E] flex items-center gap-2">
+        <Sparkles class="w-6 h-6 text-[#FFA500]" />
+        Record Shiny
+      </h3>
       
-      <div class="flex items-center gap-4 mb-6">
-        <img 
-          src={pokemon.shinySpriteUrl} 
-          alt={pokemon.name}
-          class="w-20 h-20 object-contain"
-        />
+      <div class="flex items-center gap-4 mb-6 p-4 bg-gradient-to-r from-[#FFFACD]/50 to-[#FFE4B5]/50 rounded-xl">
+        <div class="w-20 h-20 rounded-xl bg-white/80 flex items-center justify-center shadow-sm">
+          <img 
+            src={pokemon.shinySpriteUrl} 
+            alt={pokemon.name}
+            class="w-16 h-16 object-contain animate-float"
+          />
+        </div>
         
         <div>
-          <p class="text-sm text-gray-500">#{String(pokemon.id).padStart(3, '0')}</p>
-          <h4 class="text-xl font-bold capitalize">{displayName}</h4>
+          <p class="text-sm text-[#4A3A4B]">#{String(pokemon.id).padStart(3, '0')}</p>
+          <h4 class="text-xl font-bold capitalize text-[#2D1B2E]">{displayName}</h4>
         </div>
       </div>
       
       <form on:submit|preventDefault={handleSubmit}>
         <div class="form-control mb-4">
           <label class="label" for="method">
-            <span class="label-text">Hunting Method</span>
+            <span class="label-text text-[#2D1B2E] font-medium">Hunting Method</span>
           </label>
           
           <select 
             id="method"
             bind:value={selectedMethod}
-            class="select select-bordered w-full"
+            class="select select-bordered w-full bg-white/70 border-[#FFD700]/30 focus:border-[#FFD700] focus:ring-2 focus:ring-[#FFD700]/30 rounded-xl"
           >
             {#each HUNT_METHODS as method}
               <option value={method.value}>{method.label}</option>
@@ -83,14 +90,14 @@
         
         <div class="form-control mb-4">
           <label class="label" for="encounters">
-            <span class="label-text">Encounters</span>
+            <span class="label-text text-[#2D1B2E] font-medium">Encounters</span>
           </label>
           
           <input 
             id="encounters"
             type="number"
             bind:value={encounters}
-            class="input input-bordered"
+            class="input input-bordered bg-white/70 border-[#FFD700]/30 focus:border-[#FFD700] focus:ring-2 focus:ring-[#FFD700]/30 rounded-xl"
             placeholder="Number of encounters"
             min="0"
           />
@@ -98,25 +105,29 @@
         
         <div class="form-control mb-6">
           <label class="label" for="notes">
-            <span class="label-text">Notes (optional)</span>
+            <span class="label-text text-[#2D1B2E] font-medium">Notes (optional)</span>
           </label>
           
           <textarea 
             id="notes"
             bind:value={notes}
-            class="textarea textarea-bordered"
+            class="textarea textarea-bordered bg-white/70 border-[#FFD700]/30 focus:border-[#FFD700] focus:ring-2 focus:ring-[#FFD700]/30 rounded-xl"
             placeholder="Any notes about this shiny..."
             rows="3"
           ></textarea>
         </div>
         
-        <div class="flex gap-2">
-          <button type="button" class="btn flex-1" on:click={close}>Cancel</button>
-          <button type="submit" class="btn btn-success flex-1">Record Shiny</button>
+        <div class="flex gap-3">
+          <button type="button" class="btn flex-1 bg-[#F5EDE3] text-[#4A3A4B] border-0 hover:bg-[#E8DFD5] rounded-xl" on:click={close}>Cancel</button>
+          
+          <button type="submit" class="btn flex-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500] text-white border-0 hover:shadow-lg hover:brightness-105 transition-all rounded-xl">
+            <Sparkles class="w-4 h-4 mr-2" />
+            Record Shiny
+          </button>
         </div>
       </form>
     </div>
     
-    <button class="modal-backdrop" on:click={close} aria-label="Close modal"></button>
+    <button class="modal-backdrop bg-[#2D1B2E]/30" on:click={close} aria-label="Close modal"></button>
   </div>
 {/if}

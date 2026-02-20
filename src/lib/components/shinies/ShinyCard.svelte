@@ -2,7 +2,7 @@
   import { formatTimeAgo } from '$lib/utils/formatters';
   import { deleteShiny } from '$lib/services/shinyService';
   import type { Shiny } from '$lib/types';
-  import { Trash2, Sparkles } from 'lucide-svelte';
+  import { Trash2, Sparkles, Trophy } from 'lucide-svelte';
   
   export let shiny: Shiny;
   
@@ -16,51 +16,72 @@
   $: displayName = shiny.pokemonName.charAt(0).toUpperCase() + shiny.pokemonName.slice(1);
 </script>
 
-<div class="card bg-base-100 shadow-md overflow-hidden group">
-  <div class="relative bg-gradient-to-b from-base-200 to-base-100 p-4">
+<div class="card bg-white/80 backdrop-blur-sm shadow-lg border border-[#FFD700]/30 rounded-2xl overflow-hidden group card-hover">
+  <div class="h-1 bg-gradient-to-r from-[#FFD700] to-[#FFA500]"></div>
+  
+  <div class="relative bg-gradient-to-b from-[#FFFACD]/60 to-[#FFE4B5]/30 p-4">
     <!-- Delete button -->
     <button 
-      class="absolute top-2 right-2 btn btn-ghost btn-circle btn-sm opacity-0 group-hover:opacity-100 transition-opacity"
+      class="absolute top-3 right-3 btn btn-ghost btn-circle btn-sm opacity-0 group-hover:opacity-100 transition-all hover:bg-red-100"
       on:click={handleDelete}
       title="Delete"
     >
-      <Trash2 class="w-4 h-4 text-error" />
+      <Trash2 class="w-4 h-4 text-red-500" />
     </button>
     
     <!-- Shiny indicator -->
-    <div class="absolute top-2 left-2">
-      <Sparkles class="w-5 h-5 text-yellow-400" />
+    <div class="absolute top-3 left-3">
+      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#FFD700] to-[#FFA500] flex items-center justify-center shadow-md">
+        <Sparkles class="w-4 h-4 text-white" />
+      </div>
     </div>
     
     <!-- Sprite -->
-    <div class="flex justify-center">
+    <div class="flex justify-center pt-4">
       <img 
         src={shiny.shinySpriteUrl} 
         alt={shiny.pokemonName}
-        class="w-24 h-24 object-contain"
+        class="w-24 h-24 object-contain animate-float"
       />
     </div>
   </div>
   
   <div class="card-body p-4">
-    <h3 class="font-bold text-lg capitalize">{displayName}</h3>
+    <h3 class="font-bold text-lg capitalize text-[#2D1B2E]">{displayName}</h3>
     
-    <div class="space-y-1 text-sm">
-      <p class="text-gray-500">
-        <span class="font-medium">Method:</span> 
-        <span class="capitalize">{shiny.method.replace('_', ' ')}</span>
-      </p>
+    <div class="space-y-2 text-sm">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-[#87CEEB]/20 flex items-center justify-center">
+          <Trophy class="w-3 h-3 text-[#5BA8D0]" />
+        </div>
+        <span class="text-[#4A3A4B]">
+          <span class="font-medium">Method:</span> 
+          <span class="capitalize">{shiny.method.replace('_', ' ')}</span>
+        </span>
+      </div>
       
-      <p class="text-gray-500">
-        <span class="font-medium">Encounters:</span> 
-        {shiny.encounters.toLocaleString()}
-      </p>
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-[#FFB7C5]/20 flex items-center justify-center">
+          <span class="text-xs">👀</span>
+        </div>
+        <span class="text-[#4A3A4B]">
+          <span class="font-medium">Encounters:</span> 
+          {shiny.encounters.toLocaleString()}
+        </span>
+      </div>
       
-      <p class="text-gray-400 text-xs">Caught {caughtAt}</p>
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-[#98FB98]/20 flex items-center justify-center">
+          <span class="text-xs">📅</span>
+        </div>
+        <span class="text-[#4A3A4B]/70 text-xs">Caught {caughtAt}</span>
+      </div>
       
       
       {#if shiny.notes}
-        <p class="text-gray-500 text-xs mt-2 italic">"{shiny.notes}"</p>
+        <div class="mt-3 p-2 bg-[#FFF8F0] rounded-lg">
+          <p class="text-[#4A3A4B] text-xs italic">"{shiny.notes}"</p>
+        </div>
       {/if}
     </div>
   </div>

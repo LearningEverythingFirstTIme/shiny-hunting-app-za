@@ -1,10 +1,300 @@
 @import "tailwindcss";
 
+/* Sylveon Theme - Soft pastel pink, sky blue, cream aesthetic */
+
 @theme {
-  --color-poke-red: #FF0000;
-  --color-poke-blue: #3B4CCA;
-  --color-poke-yellow: #FFDE00;
-  --color-poke-gold: #B3A125;
+  /* Primary Colors */
+  --color-sylveon-pink: #FFB7C5;
+  --color-sylveon-pink-light: #FFD1D9;
+  --color-sylveon-pink-dark: #E89AAA;
+  --color-sylveon-pink-soft: #FFE4E9;
+  
+  /* Secondary Colors */
+  --color-sylveon-blue: #87CEEB;
+  --color-sylveon-blue-light: #B0E0F0;
+  --color-sylveon-blue-dark: #5BA8D0;
+  --color-sylveon-blue-soft: #E0F4FC;
+  
+  /* Accent Colors */
+  --color-sylveon-accent: #4A90E2;
+  --color-sylveon-accent-light: #7AB8F0;
+  --color-sylveon-accent-dark: #2E6BB5;
+  
+  /* Neutral Colors */
+  --color-sylveon-cream: #FFF8F0;
+  --color-sylveon-cream-dark: #F5EDE3;
+  --color-sylveon-dark: #2D1B2E;
+  --color-sylveon-dark-soft: #4A3A4B;
+  
+  /* Shiny Colors */
   --color-shiny-gold: #FFD700;
   --color-shiny-silver: #C0C0C0;
+  --color-shiny-sparkle: #FFFACD;
+}
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+:root {
+  /* DaisyUI Theme Overrides for Sylveon Theme */
+  --p: 345 100% 86%;           /* Primary: Sylveon pink */
+  --pf: 345 60% 76%;           /* Primary focus */
+  --pc: 280 40% 18%;           /* Primary content (dark purple) */
+  
+  --s: 197 71% 73%;            /* Secondary: Sky blue */
+  --sf: 197 50% 63%;
+  --sc: 280 40% 18%;
+  
+  --a: 214 72% 59%;            /* Accent: Deeper blue */
+  --af: 214 50% 49%;
+  --ac: 0 0% 100%;
+  
+  --n: 300 20% 88%;            /* Neutral: Cream tint */
+  --nf: 300 15% 78%;
+  --nc: 280 40% 18%;
+  
+  --b1: 30 100% 97%;           /* Base 100: Cream white */
+  --b2: 30 30% 94%;
+  --b3: 30 20% 88%;
+  --bc: 280 30% 20%;
+  
+  --in: 197 71% 73%;           /* Info: Blue */
+  --inf: 197 50% 63%;
+  --inc: 280 40% 18%;
+  
+  --su: 150 60% 65%;           /* Success: Soft green */
+  --suf: 150 40% 55%;
+  --suc: 280 40% 18%;
+  
+  --wa: 45 90% 65%;            /* Warning: Soft gold */
+  --waf: 45 70% 55%;
+  --wac: 280 40% 18%;
+  
+  --er: 0 70% 65%;             /* Error: Soft red */
+  --erf: 0 50% 55%;
+  --erc: 0 0% 100%;
+  
+  --rounded-box: 1rem;
+  --rounded-btn: 0.75rem;
+  --rounded-badge: 0.5rem;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] {
+  --b1: 280 30% 12%;
+  --b2: 280 25% 16%;
+  --b3: 280 20% 22%;
+  --bc: 30 30% 95%;
+  --n: 280 20% 20%;
+  --nf: 280 15% 30%;
+  --nc: 30 30% 95%;
+}
+
+/* Global Typography */
+html {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ribbon-wave {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 183, 197, 0.4); }
+  50% { opacity: 0.9; box-shadow: 0 0 0 8px rgba(255, 183, 197, 0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Animation Classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-ribbon {
+  animation: ribbon-wave 3s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Sylveon Ribbon Gradient Background */
+.bg-sylveon-gradient {
+  background: linear-gradient(135deg, #FFB7C5 0%, #87CEEB 50%, #FFB7C5 100%);
+}
+
+.bg-sylveon-gradient-soft {
+  background: linear-gradient(135deg, #FFE4E9 0%, #E0F4FC 50%, #FFE4E9 100%);
+}
+
+.bg-sylveon-cream-gradient {
+  background: linear-gradient(180deg, #FFF8F0 0%, #F5EDE3 100%);
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(255, 183, 197, 0.3);
+}
+
+/* Button Styles */
+.btn-sylveon {
+  @apply bg-gradient-to-r from-[#FFB7C5] to-[#E89AAA] text-[#2D1B2E] font-semibold;
+  @apply border-0 shadow-md;
+  @apply hover:shadow-lg hover:brightness-105;
+  @apply active:scale-95;
+  transition: all 0.2s ease;
+}
+
+.btn-sylveon-blue {
+  @apply bg-gradient-to-r from-[#87CEEB] to-[#5BA8D0] text-white font-semibold;
+  @apply border-0 shadow-md;
+  @apply hover:shadow-lg hover:brightness-105;
+  @apply active:scale-95;
+  transition: all 0.2s ease;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .glass {
+  background: rgba(45, 27, 46, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sparkle decoration */
+.sparkle-decoration::before {
+  content: '✨';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Ribbon border effect */
+.ribbon-border {
+  position: relative;
+}
+
+.ribbon-border::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #FFB7C5, #87CEEB, #FFB7C5, transparent);
+  border-radius: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--b2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FFB7C5, #87CEEB);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #E89AAA, #5BA8D0);
+}
+
+/* Input focus styles */
+.input-sylveon:focus,
+.select-sylveon:focus,
+.textarea-sylveon:focus {
+  outline: none;
+  border-color: #FFB7C5;
+  box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.3);
+}
+
+/* Page transition */
+.page-transition {
+  animation: slide-up 0.4s ease-out, fade-in 0.3s ease-out;
+}
+
+/* Shiny sparkle overlay */
+.shiny-sparkle {
+  position: relative;
+}
+
+.shiny-sparkle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.3) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: inherit;
 }
