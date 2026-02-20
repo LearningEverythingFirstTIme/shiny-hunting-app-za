@@ -39,7 +39,8 @@ export async function recordShiny(
   shinySpriteUrl: string,
   method: HuntMethod,
   encounters: number,
-  notes?: string
+  notes?: string,
+  isAlpha?: boolean
 ): Promise<{ success: boolean; error?: string }> {
   try {
     await addDoc(collection(db, 'shinies'), {
@@ -52,7 +53,8 @@ export async function recordShiny(
       caughtAt: Timestamp.now(),
       notes: notes || '',
       favorite: false,
-      tags: []
+      tags: [],
+      isAlpha: isAlpha || false
     });
     return { success: true };
   } catch (error: any) {

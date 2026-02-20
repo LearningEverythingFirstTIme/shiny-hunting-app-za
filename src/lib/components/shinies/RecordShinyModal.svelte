@@ -12,12 +12,14 @@
   let selectedMethod = 'respawn';
   let encounters = 0;
   let notes = '';
+  let isAlpha = false;
   
   function close() {
     isOpen = false;
     selectedMethod = 'respawn';
     encounters = 0;
     notes = '';
+    isAlpha = false;
     dispatch('close');
   }
   
@@ -34,7 +36,8 @@
       shinySpriteUrl: pokemon.shinySpriteUrl,
       method: selectedMethod,
       encounters,
-      notes
+      notes,
+      isAlpha
     };
     console.log('Dispatching record event:', eventData);
     
@@ -107,6 +110,22 @@
             placeholder="Number of encounters"
             min="0"
           />
+        </div>
+        
+        <div class="form-control mb-4">
+          <label class="label cursor-pointer justify-start gap-3" for="isAlpha">
+            <input 
+              id="isAlpha"
+              type="checkbox"
+              bind:checked={isAlpha}
+              class="checkbox checkbox-warning border-[#FFD700]/50 checked:border-[#FF6B35] checked:bg-[#FF6B35]"
+            />
+            <span class="label-text text-[#2D1B2E] font-medium flex items-center gap-2">
+              <span class="px-2 py-0.5 bg-gradient-to-r from-[#FF6B35] to-[#FF4500] text-white text-xs font-bold rounded">α</span>
+              Alpha Pokemon
+            </span>
+          </label>
+          <p class="text-xs text-[#4A3A4B]/60 ml-8">Stronger variant from Pokemon Legends Z-A</p>
         </div>
         
         <div class="form-control mb-6">

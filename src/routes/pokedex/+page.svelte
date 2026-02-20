@@ -85,7 +85,8 @@
       event.detail.shinySpriteUrl,
       event.detail.method,
       event.detail.encounters,
-      event.detail.notes
+      event.detail.notes,
+      event.detail.isAlpha
     );
     
     if (error) {

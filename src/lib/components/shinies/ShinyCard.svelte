@@ -36,6 +36,15 @@
       </div>
     </div>
     
+    <!-- Alpha indicator -->
+    {#if shiny.isAlpha}
+      <div class="absolute top-3 left-14">
+        <div class="px-2 py-1 rounded-lg bg-gradient-to-r from-[#FF6B35] to-[#FF4500] flex items-center justify-center shadow-md">
+          <span class="text-white text-xs font-bold">α ALPHA</span>
+        </div>
+      </div>
+    {/if}
+    
     <!-- Sprite -->
     <div class="flex justify-center pt-4">
       <img 

@@ -46,6 +46,7 @@ export interface Shiny {
   notes?: string;
   favorite: boolean;
   tags: string[];
+  isAlpha?: boolean;
 }
 
 export interface Pokemon {
