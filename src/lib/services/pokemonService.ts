@@ -243,6 +243,7 @@ const ZA_POKEMON_LIST: { id: number; name: string }[] = [
 const ZA_POKEMON_IDS = ZA_POKEMON_LIST.map(p => p.id);
 
 export async function getZAPokemon(): Promise<Pokemon[]> {
+  console.log('getZAPokemon called');
   // Check cache first
   if (browser) {
     const cached = localStorage.getItem(CACHE_KEY);
@@ -250,6 +251,7 @@ export async function getZAPokemon(): Promise<Pokemon[]> {
       try {
         const { data, timestamp } = JSON.parse(cached);
         if (Date.now() - timestamp < CACHE_DURATION) {
+          console.log('Returning cached Pokemon:', data.length);
           return data;
         }
       } catch (e) {
@@ -259,7 +261,9 @@ export async function getZAPokemon(): Promise<Pokemon[]> {
   }
   
   // Fetch from PokeAPI
+  console.log('Fetching from PokeAPI...');
   const pokemon = await fetchZAPokemonFromAPI();
+  console.log('Fetched', pokemon.length, 'Pokemon from API');
   
   // Cache results
   if (browser) {
