@@ -4,7 +4,6 @@
   import { user } from '$lib/stores/auth';
   import { subscribeToHunts } from '$lib/services/huntService';
   import { subscribeToShinies } from '$lib/services/shinyService';
-  import Navbar from '$lib/components/layout/Navbar.svelte';
   import Sidebar from '$lib/components/layout/Sidebar.svelte';
   import BottomNav from '$lib/components/layout/BottomNav.svelte';
   
@@ -43,18 +42,15 @@
     
     <!-- Main content area -->
     <div class="flex-1 flex flex-col min-h-screen">
-      <!-- Mobile navbar -->
+      <!-- Mobile hamburger nav at TOP -->
       <div class="lg:hidden">
-        <Navbar />
+        <BottomNav />
       </div>
       
       <!-- Page content -->
       <main class="flex-1 p-4 page-transition">
         <slot />
       </main>
-      
-      <!-- Bottom nav - mobile only -->
-      <BottomNav />
     </div>
   </div>
 </div>
