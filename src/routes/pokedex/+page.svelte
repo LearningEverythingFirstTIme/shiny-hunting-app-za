@@ -16,7 +16,7 @@
   import { startHunt } from '$lib/services/huntService';
   import { recordShiny } from '$lib/services/shinyService';
   import { user } from '$lib/stores/auth';
-  import { Sparkles, BookOpen } from 'lucide-svelte';
+  import { Sparkles, BookOpen, Target } from 'lucide-svelte';
   
   let pokemon: Pokemon[] = [];
   let loading = true;
@@ -228,7 +228,3 @@
     on:record={handleRecordShiny}
   />
 </AuthGuard>
-
-<script context="module">
-  import { Target } from 'lucide-svelte';
-</script>
