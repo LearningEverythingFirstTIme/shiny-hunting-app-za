@@ -35,12 +35,7 @@
   $: huntingPokemonIds = $activeHunts.map(h => h.pokemonId);
   
   onMount(async () => {
-    console.log('Pokedex onMount, isAuthenticated:', $isAuthenticated);
-    if (!$isAuthenticated) {
-      console.log('Not authenticated, skipping load');
-      loading = false;
-      return;
-    }
+    console.log('Pokedex onMount');
     
     try {
       console.log('Loading Z-A Pokemon...');
