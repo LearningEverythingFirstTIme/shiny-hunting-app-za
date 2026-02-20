@@ -58,7 +58,3 @@
     </div>
   </div>
 </aside>
-
-<script context="module">
-  import { Sparkles } from 'lucide-svelte';
-</script>
