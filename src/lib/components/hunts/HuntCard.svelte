@@ -1,6 +1,7 @@
 <script lang="ts">
   import { formatTimeAgo, formatHuntDuration } from '$lib/utils/formatters';
   import { incrementHunt, decrementHunt, completeHunt, deleteHunt } from '$lib/services/huntService';
+  import { celebrateShiny } from '$lib/utils/celebration';
   import type { Hunt } from '$lib/types';
   import { Plus, Minus, Trash2, Check, RotateCcw, Target } from 'lucide-svelte';
 
@@ -28,7 +29,10 @@
 
   async function handleComplete() {
     if (confirm(`Mark ${hunt.pokemonName} as caught?`)) {
-      await completeHunt(hunt.id, hunt.encounters);
+      const result = await completeHunt(hunt.id, hunt.encounters);
+      if (result.success) {
+        celebrateShiny();
+      }
     }
   }
 

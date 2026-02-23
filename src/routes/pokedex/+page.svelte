@@ -15,6 +15,7 @@
   import RecordShinyModal from '$lib/components/shinies/RecordShinyModal.svelte';
   import { startHunt } from '$lib/services/huntService';
   import { recordShiny } from '$lib/services/shinyService';
+  import { celebrateShiny } from '$lib/utils/celebration';
   import { user } from '$lib/stores/auth';
   import { Sparkles, BookOpen, Target } from 'lucide-svelte';
   
@@ -94,6 +95,7 @@
       alert('Failed to record shiny: ' + error);
     } else {
       console.log('Shiny recorded successfully');
+      celebrateShiny();
       selectedPokemon = null;
     }
   }
