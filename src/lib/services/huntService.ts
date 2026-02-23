@@ -33,6 +33,8 @@ export function subscribeToHunts(userId: string) {
       lastUpdated: doc.data().lastUpdated?.toDate(),
       completedAt: doc.data().completedAt?.toDate(),
     })) as Hunt[];
+    // Sort by most recently initiated (startedAt desc)
+    hunts.sort((a, b) => (b.startedAt?.getTime() || 0) - (a.startedAt?.getTime() || 0));
     activeHunts.set(hunts);
   });
 
