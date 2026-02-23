@@ -98,22 +98,45 @@ export async function incrementHunt(huntId: string, amount: number = 1): Promise
     const huntRef = doc(db, 'hunts', huntId);
     const huntDoc = await getDocs(query(collection(db, 'hunts'), where('__name__', '==', huntId)));
     const huntData = huntDoc.docs[0]?.data();
-    
+
     if (!huntData) throw new Error('Hunt not found');
-    
+
     const currentEncounters = huntData.encounters || 0;
     const startedAt = huntData.startedAt?.toDate();
     const now = new Date();
-    const durationMinutes = startedAt 
+    const durationMinutes = startedAt
       ? Math.floor((now.getTime() - startedAt.getTime()) / 60000)
       : 0;
-    
+
     await updateDoc(huntRef, {
       encounters: currentEncounters + amount,
       lastUpdated: Timestamp.now(),
       durationMinutes
     });
-    
+
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function decrementHunt(huntId: string, amount: number = 1): Promise<{ success: boolean; error?: string }> {
+  try {
+    const huntRef = doc(db, 'hunts', huntId);
+    const huntDoc = await getDocs(query(collection(db, 'hunts'), where('__name__', '==', huntId)));
+    const huntData = huntDoc.docs[0]?.data();
+
+    if (!huntData) throw new Error('Hunt not found');
+
+    const currentEncounters = huntData.encounters || 0;
+    // Don't go below 0
+    const newEncounters = Math.max(0, currentEncounters - amount);
+
+    await updateDoc(huntRef, {
+      encounters: newEncounters,
+      lastUpdated: Timestamp.now()
+    });
+
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
