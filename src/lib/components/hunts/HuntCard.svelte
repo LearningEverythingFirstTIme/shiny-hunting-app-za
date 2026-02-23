@@ -31,7 +31,7 @@
     if (confirm(`Mark ${hunt.pokemonName} as caught?`)) {
       const result = await completeHunt(hunt.id, hunt.encounters);
       if (result.success) {
-        celebrateShiny();
+        celebrateShiny(hunt.encounters, hunt.durationMinutes || 0);
       }
     }
   }

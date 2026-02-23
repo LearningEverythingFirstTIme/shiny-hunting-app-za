@@ -95,7 +95,7 @@
       alert('Failed to record shiny: ' + error);
     } else {
       console.log('Shiny recorded successfully');
-      celebrateShiny();
+      celebrateShiny(event.detail.encounters, 0);
       selectedPokemon = null;
     }
   }
