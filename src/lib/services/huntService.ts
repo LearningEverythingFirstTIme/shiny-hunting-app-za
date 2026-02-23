@@ -1,7 +1,7 @@
-import { 
-  collection, 
-  query, 
-  where, 
+import {
+  collection,
+  query,
+  where,
   onSnapshot,
   addDoc,
   updateDoc,
@@ -13,6 +13,7 @@ import {
 import { db } from '$lib/firebase/client';
 import { writable } from 'svelte/store';
 import type { Hunt, HuntMethod } from '$lib/types';
+import { recordShiny } from './shinyService';
 
 export const activeHunts = writable<Hunt[]>([]);
 export const completedHunts = writable<Hunt[]>([]);
@@ -24,7 +25,7 @@ export function subscribeToHunts(userId: string) {
     where('userId', '==', userId),
     where('status', '==', 'active')
   );
-  
+
   const activeUnsub = onSnapshot(activeQuery, (snapshot) => {
     const hunts = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -44,7 +45,7 @@ export function subscribeToHunts(userId: string) {
     where('userId', '==', userId),
     where('status', '==', 'completed')
   );
-  
+
   const completedUnsub = onSnapshot(completedQuery, (snapshot) => {
     const hunts = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -161,15 +162,32 @@ export async function completeHunt(huntId: string, finalEncounters: number): Pro
     const huntRef = doc(db, 'hunts', huntId);
     const huntDoc = await getDocs(query(collection(db, 'hunts'), where('__name__', '==', huntId)));
     const huntData = huntDoc.docs[0]?.data();
-    
+
     if (!huntData) throw new Error('Hunt not found');
-    
+
     const startedAt = huntData.startedAt?.toDate();
     const now = new Date();
-    const durationMinutes = startedAt 
+    const durationMinutes = startedAt
       ? Math.floor((now.getTime() - startedAt.getTime()) / 60000)
       : 0;
-    
+
+    // First, record the shiny
+    const shinyResult = await recordShiny(
+      huntData.userId,
+      huntData.pokemonId,
+      huntData.pokemonName,
+      huntData.shinySpriteUrl,
+      huntData.method,
+      finalEncounters,
+      huntData.notes || '',
+      huntData.isAlpha || false
+    );
+
+    if (!shinyResult.success) {
+      throw new Error(`Failed to record shiny: ${shinyResult.error}`);
+    }
+
+    // Then, mark the hunt as completed
     await updateDoc(huntRef, {
       status: 'completed',
       encounters: finalEncounters,
@@ -178,7 +196,7 @@ export async function completeHunt(huntId: string, finalEncounters: number): Pro
       durationMinutes,
       caught: true
     });
-    
+
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
