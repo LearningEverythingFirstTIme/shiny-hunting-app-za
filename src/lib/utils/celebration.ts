@@ -13,6 +13,8 @@ const SYLVEON_COLORS = {
 };
 
 export function celebrateShiny() {
+  console.log('🎉 Celebration triggered!');
+
   const colors = [
     SYLVEON_COLORS.pink,
     SYLVEON_COLORS.hotPink,
@@ -24,55 +26,60 @@ export function celebrateShiny() {
     SYLVEON_COLORS.periwinkle
   ];
 
-  // Main burst from center
-  confetti({
-    particleCount: 100,
-    spread: 70,
-    origin: { y: 0.6 },
-    colors: colors,
-    shapes: ['circle', 'square'],
-    scalar: 1.2,
-    gravity: 0.8,
-    drift: 0,
-    ticks: 200
-  });
-
-  // Side bursts for extra flair
+  // Small delay to ensure DOM is ready
   setTimeout(() => {
+    console.log('🎊 Firing confetti...');
+
+    // Main burst from center
     confetti({
-      particleCount: 50,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0, y: 0.65 },
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
       colors: colors,
-      shapes: ['circle'],
-      scalar: 1
+      shapes: ['circle', 'square'],
+      scalar: 1.2,
+      gravity: 0.8,
+      drift: 0,
+      ticks: 200
     });
+
+    // Side bursts for extra flair
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.65 },
+        colors: colors,
+        shapes: ['circle'],
+        scalar: 1
+      });
+    }, 100);
+
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.65 },
+        colors: colors,
+        shapes: ['circle'],
+        scalar: 1
+      });
+    }, 200);
+
+    // Final sparkle burst
+    setTimeout(() => {
+      confetti({
+        particleCount: 80,
+        spread: 100,
+        origin: { y: 0.5 },
+        colors: [SYLVEON_COLORS.white, SYLVEON_COLORS.lightPink, SYLVEON_COLORS.lightBlue],
+        shapes: ['circle'],
+        scalar: 0.8,
+        gravity: 0.5,
+        drift: 0.2
+      });
+    }, 400);
   }, 100);
-
-  setTimeout(() => {
-    confetti({
-      particleCount: 50,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1, y: 0.65 },
-      colors: colors,
-      shapes: ['circle'],
-      scalar: 1
-    });
-  }, 200);
-
-  // Final sparkle burst
-  setTimeout(() => {
-    confetti({
-      particleCount: 80,
-      spread: 100,
-      origin: { y: 0.5 },
-      colors: [SYLVEON_COLORS.white, SYLVEON_COLORS.lightPink, SYLVEON_COLORS.lightBlue],
-      shapes: ['circle'],
-      scalar: 0.8,
-      gravity: 0.5,
-      drift: 0.2
-    });
-  }, 400);
 }
