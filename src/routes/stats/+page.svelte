@@ -1,9 +1,18 @@
 <script lang="ts">
   import { activeHunts, completedHunts } from '$lib/services/huntService';
   import { shinies } from '$lib/services/shinyService';
+  import { auth } from '$lib/firebase/client';
+  import { onMount } from 'svelte';
   import AuthGuard from '$lib/components/layout/AuthGuard.svelte';
   import StatCard from '$lib/components/stats/StatCard.svelte';
-  import { BarChart3, Sparkles, Target, Clock, TrendingUp } from 'lucide-svelte';
+  import { BarChart3, Sparkles, Target, Clock, TrendingUp, User } from 'lucide-svelte';
+
+  let userId = '';
+  let showUserId = false;
+
+  onMount(() => {
+    userId = auth.currentUser?.uid || '';
+  });
   
   $: totalShinies = $shinies.length;
   $: totalActiveHunts = $activeHunts.length;
@@ -192,5 +201,28 @@
         </div>
       </div>
     {/if}
+
+    <!-- User ID (for recovery script) -->
+    <div class="mt-6 text-center">
+      <button
+        class="text-xs text-[#4A3A4B]/50 hover:text-[#4A3A4B] transition-colors flex items-center gap-1 mx-auto"
+        on:click={() => showUserId = !showUserId}
+      >
+        <User class="w-3 h-3" />
+        {showUserId ? 'Hide User ID' : 'Show User ID (for recovery)'}
+      </button>
+
+      {#if showUserId}
+        <div class="mt-2 p-3 bg-[#F5EDE3] rounded-lg inline-block">
+          <code class="text-xs text-[#2D1B2E] break-all">{userId}</code>
+          <button
+            class="block mt-1 text-xs text-[#87CEEB] hover:text-[#5BA8D0]"
+            on:click={() => navigator.clipboard.writeText(userId)}
+          >
+            Copy to clipboard
+          </button>
+        </div>
+      {/if}
+    </div>
   </div>
 </AuthGuard>
