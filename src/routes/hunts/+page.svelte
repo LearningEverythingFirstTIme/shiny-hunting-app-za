@@ -47,7 +47,7 @@
         </div>
       </div>
     {:else}
-      <div class="grid gap-4">
+      <div class="grid gap-2 sm:gap-3">
         {#each $activeHunts as hunt (hunt.id)}
           <HuntCard {hunt} />
         {/each}
